@@ -100,8 +100,10 @@ void gameStart() {
   points = 0;
   enemy.relocate();
   gamePlaying = true;
+  println("The game is starting!");
 }
 
 void gameOver() {
   isGameOver = true;
+  println("The game is over!");
 }
