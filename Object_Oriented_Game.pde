@@ -1,3 +1,4 @@
+ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 boolean gamePlaying = false;
 boolean isGameOver = false;
 boolean tick = false;
@@ -28,6 +29,7 @@ void draw() {
     fill(0);
     time = nf(t, 2);
     text(time, width / 2, 50);
+    enemy.display();
     if (ms == 100) {
       t = interval - secondsPassed;
       secondsPassed = secondsPassed + 1;
