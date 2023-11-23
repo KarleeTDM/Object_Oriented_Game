@@ -1,15 +1,30 @@
 class Enemy {
-  PVector location;
+  float enemyX;
+  float enemyY;
   
-  Enemy(PVector l) {
-    location = new PVector(l.x, l.y);
+  void relocate() {
+    enemyX = random(0, width);
+    enemyY = 251;
   }
   
   void display() {
     noStroke();
-    fill(100);
-    rectMode(CORNERS);
-    rect(location.x - 15, location.y - 35, 35, 25);
-    rect(location.x, location.y, 10, 10);
+    fill(0);
+    rectMode(CENTER);
+    // Head
+    rect(enemyX, enemyY - 35, 35, 35);
+    // Eyes
+    fill(255, 0, 0);
+    rect(enemyX - 5, enemyY - 35, 5, 5);
+    rect(enemyX + 5, enemyY - 35, 5, 5);
+    // Torso
+    fill(0);
+    rect(enemyX, enemyY - 10, 25, 30);
+    // Arms
+    rect(enemyX - 20, enemyY - 15, 20, 5);
+    rect(enemyX + 20, enemyY - 15, 20, 5);
+    // Legs
+    rect(enemyX - 7, enemyY + 15, 10, 25);
+    rect(enemyX + 7, enemyY + 15, 10, 25);
   }
 }
