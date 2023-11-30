@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 Enemy enemy = new Enemy();
 ArrayList<Particle> particles;
 boolean gamePlaying = false;
@@ -8,10 +10,14 @@ int t;
 int interval = 60;
 int ms = 1;
 int secondsPassed = 0;
+PImage img;
+SoundFile flame;
 String time = "60";
 
 void setup() {
    size(400, 400);
+   flame = new SoundFile(this, "Flamethrower_Sound_Effect.mp3");
+   img = loadImage("Karlee_8bit.png");
    particles = new ArrayList<Particle>();
    background(0);
    fill(255);
@@ -41,15 +47,15 @@ void draw() {
         particles.remove(i);
       }
     }
-    if (mousePressed == true) {
-      if (mouseX >= enemy.enemyX - 25 && mouseX <= enemy.enemyX + 25 && mouseY >= enemy.enemyY - 25 && mouseY <= enemy.enemyY + 25) {
+    if (mousePressed) {
+      if (mouseX >= enemy.enemyX - 25 && mouseX <= enemy.enemyX + 25 && mouseY >= enemy.enemyY - 50 && mouseY <= enemy.enemyY + 25) {
         points = points + 1;
         enemy.relocate();
       }
       fill(255, 188, 0);
-      circle(mouseX, mouseY, 40);
+      circle(mouseX, mouseY, 60);
       fill(255, 255, 0);
-      circle(mouseX, mouseY, 20);
+      circle(mouseX, mouseY, 30);
       particles.add(new Particle(mouseX, mouseY));
     }
     // Drawing the timer
@@ -74,7 +80,8 @@ void draw() {
     text(points, width / 2, height / 2);
     text("Press SPACEBAR to play again", width / 2, height / 2 + 50);
   } if (gamePlaying == false && isGameOver == false) {
-    text("Click & Press SPACEBAR to start", width / 2, height / 2);
+    image(img, -75, 100);
+    text("Click & Press SPACEBAR to start", width / 2, height / 2 - 100);
   }
 }
 
@@ -90,9 +97,16 @@ void keyPressed() {
 
 void mousePressed() {
   fill(255, 188, 0);
-  circle(mouseX, mouseY, 40);
+  circle(mouseX, mouseY, 60);
   fill(255, 255, 0);
-  circle(mouseX, mouseY, 20);
+  circle(mouseX, mouseY, 30);
+  if (gamePlaying) {
+    flame.loop();
+  }
+}
+
+void mouseReleased() {
+  flame.pause();
 }
 
 void gameStart() {

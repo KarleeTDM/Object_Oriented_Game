@@ -7,7 +7,7 @@ class Particle {
   Particle(float x, float y) {
     position = new PVector(x, y);
     velocity = new PVector(random(-2, 2), random(-2, 2));
-    acceleration = new PVector(0, 0.5);
+    acceleration = new PVector(0, -0.5);
   }
   
   void update() {
