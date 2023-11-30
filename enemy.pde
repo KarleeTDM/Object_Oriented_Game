@@ -1,4 +1,5 @@
 class Enemy {
+  
   float enemyX;
   float enemyY;
   
@@ -19,7 +20,7 @@ class Enemy {
     rect(enemyX + 5, enemyY - 35, 5, 5);
     // Torso
     fill(0);
-    rect(enemyX, enemyY - 10, 25, 30);
+    rect(enemyX, enemyY - 10, 25, 25);
     // Arms
     rect(enemyX - 20, enemyY - 15, 20, 5);
     rect(enemyX + 20, enemyY - 15, 20, 5);

@@ -5,19 +5,28 @@ ArrayList<Particle> particles;
 boolean gamePlaying = false;
 boolean isGameOver = false;
 boolean tick = false;
+float d;
+int b;
+int g;
 int points = 0;
 int t;
 int interval = 60;
 int ms = 1;
+int r;
 int secondsPassed = 0;
+int y = 0;
 PImage img;
+PVector enemyPVector;
+PVector mousePVector;
 SoundFile flame;
+SoundFile music;
 String time = "60";
 
 void setup() {
    size(400, 400);
    flame = new SoundFile(this, "Flamethrower_Sound_Effect.mp3");
    img = loadImage("Karlee_8bit.png");
+   music = new SoundFile(this, "Game_Music.mp3");
    particles = new ArrayList<Particle>();
    background(0);
    fill(255);
@@ -27,13 +36,48 @@ void setup() {
 }
 
 void draw() {
-  if (gamePlaying) { 
-    background(150, 225, 255);
+  y = 0;
+  if (gamePlaying) {
+    r = 150 + (mouseY / 2);
+    b = 255 - (mouseY / 2);
+    background(r, g, b);
+    // Drawing the sun
+    while (y < height) {
+      if (mouseY < 1) {
+        y = y + 1;
+      } else {
+        y = y + mouseY;
+      }
+      fill(255, 255, 100);
+      ellipse(width / 2, 250, y / 4, y / 4);
+    }
+    // Drawing the field
     fill(200, 255, 100);
     rectMode(CORNERS);
     rect(0, 251, 400, 400);
     // Drawing the enemy
     enemy.display();
+    // Drawing the PVector enemy
+    enemyPVector = new PVector(enemy.enemyX, enemy.enemyY);
+    enemyPVector.limit(400);
+    noStroke();
+    fill(0, 50);
+    rectMode(CENTER);
+    // Head
+    rect(enemyPVector.x, enemyPVector.y - 35, 35, 35);
+    // Eyes
+    fill(255, 0, 0, 50);
+    rect(enemyPVector.x - 5, enemyPVector.y - 35, 5, 5);
+    rect(enemyPVector.x + 5, enemyPVector.y - 35, 5, 5);
+    // Torso
+    fill(0, 50);
+    rect(enemyPVector.x, enemyPVector.y - 10, 25, 25);
+    // Arms
+    rect(enemyPVector.x - 20, enemyPVector.y - 15, 20, 5);
+    rect(enemyPVector.x + 20, enemyPVector.y - 15, 20, 5);
+    // Legs
+    rect(enemyPVector.x - 7, enemyPVector.y + 15, 10, 25);
+    rect(enemyPVector.x + 7, enemyPVector.y + 15, 10, 25);
     // Drawing the gun
     fill(125, 125, 125);
     rectMode(CORNERS);
@@ -48,8 +92,11 @@ void draw() {
       }
     }
     if (mousePressed) {
-      if (mouseX >= enemy.enemyX - 25 && mouseX <= enemy.enemyX + 25 && mouseY >= enemy.enemyY - 50 && mouseY <= enemy.enemyY + 25) {
+      mousePVector = new PVector(mouseX, mouseY);
+      d = PVector.dist(enemyPVector, mousePVector);
+      if (d <= 50) {
         points = points + 1;
+        println(enemyPVector);
         enemy.relocate();
       }
       fill(255, 188, 0);
@@ -113,11 +160,16 @@ void gameStart() {
   isGameOver = false;
   points = 0;
   enemy.relocate();
+  r = 150;
+  g = 225;
+  b = 255;
   gamePlaying = true;
   println("The game is starting!");
+  music.loop();
 }
 
 void gameOver() {
   isGameOver = true;
   println("The game is over!");
+  music.pause();
 }
