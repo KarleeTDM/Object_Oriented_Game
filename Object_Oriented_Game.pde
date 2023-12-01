@@ -6,6 +6,7 @@ boolean gamePlaying = false;
 boolean isGameOver = false;
 boolean tick = false;
 float d;
+float switchyFloat = 0;
 int b;
 int g;
 int points = 0;
@@ -14,6 +15,7 @@ int interval = 60;
 int ms = 1;
 int r;
 int secondsPassed = 0;
+int switchy = 0;
 int y = 0;
 PImage img;
 PVector enemyPVector;
@@ -56,21 +58,21 @@ void draw() {
     rectMode(CORNERS);
     rect(0, 251, 400, 400);
     // Drawing the enemy
-    enemy.display();
+    //enemy.display();
     // Drawing the PVector enemy
     enemyPVector = new PVector(enemy.enemyX, enemy.enemyY);
     enemyPVector.limit(400);
     noStroke();
-    fill(0, 50);
+    fill(0);
     rectMode(CENTER);
     // Head
     rect(enemyPVector.x, enemyPVector.y - 35, 35, 35);
     // Eyes
-    fill(255, 0, 0, 50);
+    fill(255, 0, 0);
     rect(enemyPVector.x - 5, enemyPVector.y - 35, 5, 5);
     rect(enemyPVector.x + 5, enemyPVector.y - 35, 5, 5);
     // Torso
-    fill(0, 50);
+    fill(0);
     rect(enemyPVector.x, enemyPVector.y - 10, 25, 25);
     // Arms
     rect(enemyPVector.x - 20, enemyPVector.y - 15, 20, 5);
@@ -96,8 +98,10 @@ void draw() {
       d = PVector.dist(enemyPVector, mousePVector);
       if (d <= 50) {
         points = points + 1;
-        println(enemyPVector);
         enemy.relocate();
+        switchyFloat = random(0, 3);
+        switchy = int(switchyFloat);
+        switchySwitch();
       }
       fill(255, 188, 0);
       circle(mouseX, mouseY, 60);
@@ -172,4 +176,21 @@ void gameOver() {
   isGameOver = true;
   println("The game is over!");
   music.pause();
+}
+
+void switchySwitch() {
+  switch (switchy) {
+    case 0:
+    println("Switchy is 0!");
+    break;
+    case 1:
+    println("Switchy is 1!");
+    break;
+    case 2:
+    println("Switchy is 2!");
+    break;
+    case 3:
+    println("Switchy is 3!");
+    break;
+  }
 }
