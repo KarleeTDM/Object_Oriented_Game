@@ -86,9 +86,6 @@ void draw() {
     quad(mouseX + 20, mouseY + 50, mouseX - 20, mouseY + 50, width / 2 - 30, 400, width / 2 + 30, 400);
     // Drawing the particles
     for (int i = particles.size() - 1; i >= 0; i--) {
-      for (int o = 0; o == 10; o++) {
-        println("I'm a nested loop that refuses to work.");
-      }
       Particle part = particles.get(i);
       particles.get(i).update();
       particles.get(i).display();
@@ -164,6 +161,12 @@ void mouseReleased() {
 }
 
 void gameStart() {
+  for (int why = 0; why < height; why = why + 10) {
+    for (int ex = 0; ex < width; ex = ex + 10) {
+      fill(random(255));
+      rect(ex, why, 10, 10);
+    }
+  }
   isGameOver = false;
   points = 0;
   enemy.relocate();
