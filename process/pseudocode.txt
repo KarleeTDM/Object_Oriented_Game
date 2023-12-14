@@ -1,0 +1,124 @@
+void setup {
+	size 400 by 400
+	load image
+	load flame sound file
+	load music sound file
+	create new particle object
+	make background black
+	make fill colour white
+	no stroke
+	text align centered
+	text size 30
+}
+
+void draw {
+	y = 0
+	if game is playing {
+		red = 150 + (mouseY divided by 2)
+		blue = 255 - (mouseY divided by 2)
+		background(red, green, blue)
+		while y is less than height {
+			if mouseY is less than height {
+				y = y + 1
+			} else {
+				y = y + mouseY
+			}
+			fill yellow
+			draw circle on the middle of the screen
+		}
+		fill lime green
+		rect mode corners
+		draw field on bottom half of screen
+		draw enemy
+		fill gray
+		draw gun
+		for particle in array list {
+			get particle
+			update position of particle
+			draw particle
+			if part is off screen {
+				remove particle
+			}
+		}
+		if mouse is pressed {
+			add mouse X and Y to mousePVector
+			check distance between enemy and mouse
+			if distance is less than or equal to 50 {
+				points + 1
+				relocate enemy
+			}
+			make orange circle at mouse position
+			make smaller yellow circle at mouse position
+			add particles
+		}
+		fill black
+		timer formatted to 2 digits
+		display timer as text
+		if ms is equal to 100 {
+			t = interval - secondsPassed
+			secondsPassed + 1
+			ms = 1
+		}
+		ms + 1
+		delay by 1 ms
+		if t is equal to 0 {
+			game is playing becomes false
+			game over
+		}
+	} eise if game is over {
+		make background black
+		make fill colour white
+		display "GAME OVER" as text
+		display points as text
+		display "Press SPACEBAR to play again" as text
+	} if game hasn't started {
+		display image
+		display "Click & Press SPACEBAR to start" as text
+	}
+}
+
+void key is pressed {
+	if game is not playing {
+		if key is spacebar {
+			t = interval
+			secondsPassed = 0
+			start game
+		}
+	}
+}
+
+void mouse is pressed {
+	make orange circle at mouse position
+	make smaller yellow circle at mouse position
+	if game is playing {
+		play flame sound on loop
+	}
+}
+
+void mouse is released {
+	pause flame sound
+}
+
+void start game {
+	for y on screen {
+		for x on screen {
+			fill random shade of gray/grey (let's not get into spelling politics)
+			make rect at x and y
+		}
+	}
+	game is over becomes false
+	points = 0
+	relocate enemy
+	r = 150
+	g = 225
+	b = 255
+	game is playing becomes true
+	print line "The game is starting!"
+	play music sound on loop
+}
+
+void game over {
+	game is over becomes true
+	print line "The game is over!"
+	pause music sound
+}
